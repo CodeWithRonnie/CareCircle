@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Card, Row, Col, Badge, Button, Spinner, ListGroup } from 'react-bootstrap';
 
 /**
  * Dashboard page for CareCircle
@@ -105,164 +106,251 @@ function Dashboard() {
   
   // Helper function to render priority badge
   const renderPriorityBadge = (priority) => {
-    const classes = {
-      high: 'bg-red-100 text-red-800',
-      medium: 'bg-yellow-100 text-yellow-800',
-      low: 'bg-green-100 text-green-800'
+    const variants = {
+      high: 'danger',
+      medium: 'warning',
+      low: 'success'
     };
     
     return (
-      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${classes[priority]}`}>
+      <Badge bg={variants[priority]} className="text-white">
         {priority.charAt(0).toUpperCase() + priority.slice(1)}
-      </span>
+      </Badge>
     );
   };
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+        <Spinner animation="border" variant="primary" className="loading-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="mb-5">
       {/* Welcome section */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back!</h1>
-        <p className="mt-1 text-gray-600">
-          Here's what's happening with your loved one today.
-        </p>
-      </div>
+      <Card className="mb-4 shadow-sm">
+        <Card.Body className="p-4">
+          <h1 className="fs-3 fw-bold">Welcome back!</h1>
+          <p className="text-secondary mb-0">
+            Here's what's happening with your loved one today.
+          </p>
+        </Card.Body>
+      </Card>
       
       {/* Quick actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Link 
-          to="/updates/new" 
-          className="bg-primary-50 hover:bg-primary-100 p-6 rounded-lg border border-primary-200 flex flex-col items-center justify-center text-center transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg>
-          <span className="font-medium text-primary-700">Post Update</span>
-        </Link>
+      <Row className="mb-4 g-3">
+        <Col md={4}>
+          <Card className="h-100 text-center border-0 shadow-sm bg-care-primary-light">
+            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
+              <div className="mb-3 fs-1 text-care-primary">
+                <i className="bi bi-pencil-square"></i>
+              </div>
+              <h5 className="card-title mb-0">Post Update</h5>
+              <p className="text-muted small mt-2">Share how your loved one is doing</p>
+              <Button variant="primary" as={Link} to="/updates/new" className="mt-auto">
+                <i className="bi bi-plus-circle me-2"></i>New Update
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
         
-        <Link 
-          to="/tasks/new" 
-          className="bg-secondary-50 hover:bg-secondary-100 p-6 rounded-lg border border-secondary-200 flex flex-col items-center justify-center text-center transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-          </svg>
-          <span className="font-medium text-secondary-700">Add Task</span>
-        </Link>
+        <Col md={4}>
+          <Card className="h-100 text-center border-0 shadow-sm bg-care-secondary-light">
+            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
+              <div className="mb-3 fs-1 text-care-secondary">
+                <i className="bi bi-list-check"></i>
+              </div>
+              <h5 className="card-title mb-0">Manage Tasks</h5>
+              <p className="text-muted small mt-2">Coordinate care responsibilities</p>
+              <Button variant="secondary" as={Link} to="/tasks/new" className="mt-auto">
+                <i className="bi bi-plus-circle me-2"></i>Add Task
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
         
-        <Link 
-          to="/medications/log" 
-          className="bg-green-50 hover:bg-green-100 p-6 rounded-lg border border-green-200 flex flex-col items-center justify-center text-center transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span className="font-medium text-green-700">Log Medication</span>
-        </Link>
-      </div>
+        <Col md={4}>
+          <Card className="h-100 text-center border-0 shadow-sm" style={{ backgroundColor: '#ecfdf5' }}>
+            <Card.Body className="d-flex flex-column align-items-center justify-content-center p-4">
+              <div className="mb-3 fs-1" style={{ color: '#10b981' }}>
+                <i className="bi bi-capsule"></i>
+              </div>
+              <h5 className="card-title mb-0">Track Medications</h5>
+              <p className="text-muted small mt-2">Record medication administration</p>
+              <Button variant="success" as={Link} to="/medications/log" className="mt-auto">
+                <i className="bi bi-check-circle me-2"></i>Log Medication
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
       
       {/* Recent updates */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-900">Recent Updates</h2>
-          <Link to="/updates" className="text-sm font-medium text-primary-600 hover:text-primary-500">
-            View all
+      <Card className="mb-4 shadow-sm">
+        <Card.Header className="bg-white d-flex justify-content-between align-items-center py-3">
+          <h2 className="fs-5 fw-semibold mb-0">Recent Updates</h2>
+          <Link to="/updates" className="text-decoration-none">
+            View all <i className="bi bi-arrow-right ms-1"></i>
           </Link>
-        </div>
+        </Card.Header>
         
-        <div className="space-y-4">
+        <Card.Body className="p-0">
           {recentUpdates.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">No recent updates</p>
+            <div className="text-center p-4 text-muted">
+              <i className="bi bi-chat-left-text fs-4 mb-2 d-block"></i>
+              <p>No recent updates</p>
+            </div>
           ) : (
-            recentUpdates.map(update => (
-              <div key={update.id} className="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
-                <div className="flex">
-                  <img 
-                    src={update.avatar} 
-                    alt={update.author} 
-                    className="h-10 w-10 rounded-full mr-3"
-                  />
-                  <div>
-                    <div className="flex items-center">
-                      <h3 className="font-medium text-gray-900">{update.author}</h3>
-                      <span className="ml-2 text-sm text-gray-500">{update.timestamp}</span>
+            <ListGroup variant="flush">
+              {recentUpdates.map(update => (
+                <ListGroup.Item key={update.id} className="border-bottom py-3">
+                  <div className="d-flex">
+                    <img 
+                      src={update.avatar} 
+                      alt={update.author} 
+                      className="rounded-circle me-3"
+                      width="48"
+                      height="48"
+                    />
+                    <div>
+                      <div className="d-flex align-items-center">
+                        <h6 className="mb-0">{update.author}</h6>
+                        <small className="text-muted ms-2">{update.timestamp}</small>
+                      </div>
+                      <p className="mt-1 mb-0">{update.content}</p>
                     </div>
-                    <p className="mt-1 text-gray-600">{update.content}</p>
                   </div>
-                </div>
-              </div>
-            ))
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
           )}
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
       
-      {/* Upcoming tasks and medications grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Upcoming tasks */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Upcoming Tasks</h2>
-            <Link to="/tasks" className="text-sm font-medium text-primary-600 hover:text-primary-500">
-              View all
-            </Link>
-          </div>
-          
-          <div className="space-y-3">
-            {upcomingTasks.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No upcoming tasks</p>
-            ) : (
-              upcomingTasks.map(task => (
-                <div key={task.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{task.title}</h3>
-                    <div className="flex items-center mt-1">
-                      <span className="text-sm text-gray-500 mr-3">{task.dueDate}</span>
-                      {renderPriorityBadge(task.priority)}
-                    </div>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {task.assignedTo}
-                  </div>
+      {/* Upcoming tasks and medications */}
+      <Row className="g-4">
+        <Col md={6}>
+          <Card className="h-100 shadow-sm">
+            <Card.Header className="bg-white d-flex justify-content-between align-items-center py-3">
+              <h2 className="fs-5 fw-semibold mb-0">Upcoming Tasks</h2>
+              <Link to="/tasks" className="text-decoration-none">
+                View all <i className="bi bi-arrow-right ms-1"></i>
+              </Link>
+            </Card.Header>
+            
+            <Card.Body className="p-0">
+              {upcomingTasks.length === 0 ? (
+                <div className="text-center p-4 text-muted">
+                  <i className="bi bi-list-check fs-4 mb-2 d-block"></i>
+                  <p>No upcoming tasks</p>
                 </div>
-              ))
-            )}
-          </div>
-        </div>
+              ) : (
+                <ListGroup variant="flush">
+                  {upcomingTasks.map(task => (
+                    <ListGroup.Item key={task.id} className="border-bottom py-3">
+                      <div className="d-flex justify-content-between align-items-start">
+                        <div>
+                          <h6 className="mb-1">{task.title}</h6>
+                          <p className="small mb-1">
+                            <span className="fw-medium">Due:</span> {task.dueDate}
+                          </p>
+                          <p className="small mb-0">
+                            <span className="fw-medium">Assigned to:</span> {task.assignedTo}
+                          </p>
+                        </div>
+                        {renderPriorityBadge(task.priority)}
+                      </div>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
         
-        {/* Upcoming medications */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Upcoming Medications</h2>
-            <Link to="/medications" className="text-sm font-medium text-primary-600 hover:text-primary-500">
-              View all
-            </Link>
-          </div>
-          
-          <div className="space-y-3">
-            {upcomingMeds.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No upcoming medications</p>
-            ) : (
-              upcomingMeds.map(med => (
-                <div key={med.id} className="p-3 bg-gray-50 rounded-lg">
-                  <div className="flex justify-between">
-                    <h3 className="font-medium text-gray-900">{med.name} ({med.dosage})</h3>
-                    <span className="text-sm text-gray-600">{med.schedule}</span>
-                  </div>
-                  <p className="text-sm text-gray-500 mt-1">{med.instructions}</p>
+        <Col md={6}>
+          <Card className="h-100 shadow-sm">
+            <Card.Header className="bg-white d-flex justify-content-between align-items-center py-3">
+              <h2 className="fs-5 fw-semibold mb-0">Upcoming Medications</h2>
+              <Link to="/medications" className="text-decoration-none">
+                View all <i className="bi bi-arrow-right ms-1"></i>
+              </Link>
+            </Card.Header>
+            
+            <Card.Body className="p-0">
+              {upcomingMeds.length === 0 ? (
+                <div className="text-center p-4 text-muted">
+                  <i className="bi bi-capsule fs-4 mb-2 d-block"></i>
+                  <p>No upcoming medications</p>
                 </div>
-              ))
-            )}
-          </div>
-        </div>
-      </div>
+              ) : (
+                <ListGroup variant="flush">
+                  {upcomingMeds.map(med => (
+                    <ListGroup.Item key={med.id} className="border-bottom py-3">
+                      <h6 className="mb-1">{med.name} ({med.dosage})</h6>
+                      <p className="small mb-1">
+                        <span className="fw-medium">Schedule:</span> {med.schedule}
+                      </p>
+                      <p className="small mb-0">
+                        <span className="fw-medium">Instructions:</span> {med.instructions}
+                      </p>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      
+      {/* Care summary section */}
+      <Card className="mt-4 shadow-sm">
+        <Card.Header className="bg-white py-3">
+          <h2 className="fs-5 fw-semibold mb-0">Care Summary</h2>
+        </Card.Header>
+        <Card.Body>
+          <Row className="text-center g-3">
+            <Col md={3} sm={6}>
+              <div className="p-3 rounded bg-light">
+                <div className="fs-1 text-care-primary mb-2">
+                  <i className="bi bi-calendar-check"></i>
+                </div>
+                <h5 className="fs-6 fw-semibold">Next Appointment</h5>
+                <p className="small mb-0">Dr. Williams, May 25</p>
+              </div>
+            </Col>
+            <Col md={3} sm={6}>
+              <div className="p-3 rounded bg-light">
+                <div className="fs-1 text-care-secondary mb-2">
+                  <i className="bi bi-heart-pulse"></i>
+                </div>
+                <h5 className="fs-6 fw-semibold">Vital Signs</h5>
+                <p className="small mb-0">BP: 120/80, HR: 72</p>
+              </div>
+            </Col>
+            <Col md={3} sm={6}>
+              <div className="p-3 rounded bg-light">
+                <div className="fs-1 text-success mb-2">
+                  <i className="bi bi-activity"></i>
+                </div>
+                <h5 className="fs-6 fw-semibold">Daily Activity</h5>
+                <p className="small mb-0">Walked 15 minutes</p>
+              </div>
+            </Col>
+            <Col md={3} sm={6}>
+              <div className="p-3 rounded bg-light">
+                <div className="fs-1 text-warning mb-2">
+                  <i className="bi bi-people"></i>
+                </div>
+                <h5 className="fs-6 fw-semibold">Care Team</h5>
+                <p className="small mb-0">3 active members</p>
+              </div>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
