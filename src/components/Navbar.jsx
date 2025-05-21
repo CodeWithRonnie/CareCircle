@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Navbar as BootstrapNavbar, Container, Nav, Button, Badge } from 'react-bootstrap';
+import Notifications from './Notifications';
 
 /**
  * Navbar component for CareCircle
@@ -10,6 +12,8 @@ import { Link, useNavigate } from 'react-router-dom';
 function Navbar({ isAuthenticated, toggleSidebar }) {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(3); // For demo purposes
   
   // Handle user logout
   const handleLogout = () => {
@@ -22,115 +26,92 @@ function Navbar({ isAuthenticated, toggleSidebar }) {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
-      <div className="container-app flex justify-between items-center">
-        {/* Logo and brand */}
-        <div className="flex items-center">
-          {isAuthenticated && (
-            <button 
-              onClick={toggleSidebar}
-              className="mr-3 md:hidden text-gray-500 hover:text-gray-700"
-              aria-label="Toggle sidebar"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          )}
-          
-          <Link to="/" className="flex items-center">
-            <span className="text-primary-600 text-2xl font-bold">Care</span>
-            <span className="text-secondary-600 text-2xl font-bold">Circle</span>
-          </Link>
-        </div>
-        
-        {/* Desktop navigation */}
-        <div className="hidden md:flex items-center space-x-4">
-          {isAuthenticated ? (
-            <>
-              <Link to="/profile" className="text-gray-700 hover:text-primary-600">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Profile</span>
-                </div>
-              </Link>
-              <button 
-                onClick={handleLogout}
-                className="btn btn-outline"
-              >
-                Sign Out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="btn btn-outline">Sign In</Link>
-              <Link to="/register" className="btn btn-primary">Register</Link>
-            </>
-          )}
-        </div>
-        
-        {/* Mobile menu button */}
-        <div className="md:hidden">
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-gray-500 hover:text-gray-700"
-            aria-label="Toggle menu"
+    <BootstrapNavbar bg="white" expand="md" className="shadow-sm sticky-top border-bottom border-light">
+      <Container>
+        {isAuthenticated && (
+          <Button 
+            variant="light"
+            className="d-md-none me-2"
+            onClick={toggleSidebar}
+            aria-label="Toggle sidebar"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+            <i className="bi bi-list"></i>
+          </Button>
+        )}
+        
+        <BootstrapNavbar.Brand as={Link} to="/" className="me-auto d-flex align-items-center">
+          <span className="text-primary fw-bold fs-4">Care</span>
+          <span className="text-info fw-bold fs-4">Circle</span>
+        </BootstrapNavbar.Brand>
+        
+        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setIsMenuOpen(!isMenuOpen)} />
+        
+        <BootstrapNavbar.Collapse id="basic-navbar-nav" in={isMenuOpen}>
+          <Nav className="ms-auto">
+            {isAuthenticated ? (
+              <>
+                <Button
+                  variant="light"
+                  className="position-relative me-3 rounded-circle p-2"
+                  onClick={() => setIsNotificationsOpen(true)}
+                  aria-label="Notifications"
+                >
+                  <i className="bi bi-bell"></i>
+                  {notificationCount > 0 && (
+                    <Badge 
+                      bg="danger" 
+                      pill 
+                      className="position-absolute top-0 start-100 translate-middle">
+                      {notificationCount}
+                    </Badge>
+                  )}
+                </Button>
+                
+                <Nav.Link as={Link} to="/profile" className="d-flex align-items-center me-2">
+                  <div className="avatar avatar-sm me-2">
+                    <i className="bi bi-person"></i>
+                  </div>
+                  <span className="d-none d-sm-inline">Profile</span>
+                </Nav.Link>
+                
+                <Button 
+                  variant="outline-secondary" 
+                  size="sm"
+                  className="ms-2"
+                  onClick={handleLogout}
+                >
+                  <i className="bi bi-box-arrow-right me-1"></i>
+                  <span className="d-none d-sm-inline">Sign Out</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/login" className="me-2">
+                  <Button variant="outline-primary" size="sm">
+                    <i className="bi bi-box-arrow-in-right me-1"></i> Sign In
+                  </Button>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  <Button variant="primary" size="sm">
+                    <i className="bi bi-person-plus me-1"></i> Register
+                  </Button>
+                </Nav.Link>
+              </>
+            )}
+          </Nav>
+        </BootstrapNavbar.Collapse>
+      </Container>
       
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden mt-3 pt-3 border-t border-gray-200">
-          {isAuthenticated ? (
-            <div className="space-y-3">
-              <Link 
-                to="/profile" 
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Profile
-              </Link>
-              <button 
-                onClick={handleLogout}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-3 p-4">
-              <Link 
-                to="/login" 
-                className="block w-full btn btn-outline"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign In
-              </Link>
-              <Link 
-                to="/register" 
-                className="block w-full btn btn-primary"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Register
-              </Link>
-            </div>
-          )}
-        </div>
-      )}
-    </nav>
+      {/* Notifications panel */}
+      <Notifications 
+        isVisible={isNotificationsOpen} 
+        onClose={() => {
+          setIsNotificationsOpen(false);
+          // In a real app, this would be based on actual read status
+          setNotificationCount(0);
+        }} 
+      />
+    </BootstrapNavbar>
   );
 }
 

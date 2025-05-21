@@ -1,0 +1,287 @@
+/* CareCircle Custom Styling - Bootstrap Enhancement */
+
+:root {
+  --care-primary: #4f46e5;
+  --care-primary-hover: #4338ca;
+  --care-primary-light: #eef2ff;
+  --care-secondary: #0ea5e9;
+  --care-secondary-hover: #0284c7;
+  --care-secondary-light: #e0f2fe;
+  --care-success: #10b981;
+  --care-warning: #f59e0b;
+  --care-danger: #ef4444;
+  --care-info: #3b82f6;
+  --care-gray-50: #f9fafb;
+  --care-gray-100: #f3f4f6;
+  --care-gray-200: #e5e7eb;
+  --care-gray-300: #d1d5db;
+  --care-gray-400: #9ca3af;
+  --care-gray-500: #6b7280;
+  --care-gray-600: #4b5563;
+  --care-gray-700: #374151;
+  --care-gray-800: #1f2937;
+  --care-gray-900: #111827;
+}
+
+/* General styles */
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--care-gray-50);
+  color: var(--care-gray-900);
+}
+
+/* Typography enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--care-gray-900);
+}
+
+/* Bootstrap component overrides */
+
+/* Navbar styling */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand .text-primary {
+  color: var(--care-primary) !important;
+}
+
+.navbar-brand .text-info {
+  color: var(--care-secondary) !important;
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: var(--care-primary);
+  border-color: var(--care-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--care-primary-hover);
+  border-color: var(--care-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--care-secondary);
+  border-color: var(--care-secondary);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: var(--care-secondary-hover);
+  border-color: var(--care-secondary-hover);
+}
+
+.btn-outline-primary {
+  color: var(--care-primary);
+  border-color: var(--care-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--care-primary);
+  border-color: var(--care-primary);
+}
+
+.btn-outline-secondary {
+  color: var(--care-secondary);
+  border-color: var(--care-secondary);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--care-secondary);
+  border-color: var(--care-secondary);
+}
+
+/* Card styling */
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid var(--care-gray-200);
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+}
+
+.card-footer {
+  background-color: white;
+  border-top: 1px solid var(--care-gray-200);
+}
+
+/* Form controls */
+.form-control:focus {
+  border-color: var(--care-primary);
+  box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--care-gray-700);
+}
+
+/* Badge styling */
+.badge.bg-primary {
+  background-color: var(--care-primary) !important;
+}
+
+.badge.bg-secondary {
+  background-color: var(--care-secondary) !important;
+}
+
+.badge.bg-success {
+  background-color: var(--care-success) !important;
+}
+
+.badge.bg-danger {
+  background-color: var(--care-danger) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--care-warning) !important;
+}
+
+.badge.bg-info {
+  background-color: var(--care-info) !important;
+}
+
+/* List group styling */
+.list-group-item {
+  border-color: var(--care-gray-200);
+}
+
+.list-group-item-action:hover {
+  background-color: var(--care-gray-50);
+}
+
+.list-group-item.active {
+  background-color: var(--care-primary);
+  border-color: var(--care-primary);
+}
+
+/* Offcanvas styling for notifications */
+.offcanvas-header.bg-primary {
+  background-color: var(--care-primary) !important;
+}
+
+.offcanvas-header .btn-close {
+  color: white;
+  filter: brightness(0) invert(1);
+}
+
+/* Alert styling */
+.alert-primary {
+  background-color: var(--care-primary-light);
+  border-color: var(--care-primary);
+  color: var(--care-primary-hover);
+}
+
+.alert-secondary {
+  background-color: var(--care-secondary-light);
+  border-color: var(--care-secondary);
+  color: var(--care-secondary-hover);
+}
+
+/* Custom utility classes */
+.bg-care-primary-light {
+  background-color: var(--care-primary-light);
+}
+
+.bg-care-secondary-light {
+  background-color: var(--care-secondary-light);
+}
+
+.text-care-primary {
+  color: var(--care-primary);
+}
+
+.text-care-secondary {
+  color: var(--care-secondary);
+}
+
+/* Avatar styling */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--care-primary-light);
+  color: var(--care-primary);
+  font-weight: 600;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.875rem;
+}
+
+.avatar-lg {
+  width: 48px;
+  height: 48px;
+  font-size: 1.25rem;
+}
+
+/* Notification item styling */
+.notification-item {
+  transition: background-color 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.notification-item:hover {
+  background-color: var(--care-gray-50);
+}
+
+.notification-item.unread {
+  border-left-color: var(--care-primary);
+  background-color: rgba(79, 70, 229, 0.05);
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: var(--care-gray-500);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Animation for loading states */
+.loading-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
