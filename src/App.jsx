@@ -10,6 +10,8 @@ import TaskManager from './pages/TaskManager';
 import Updates from './pages/Updates';
 import Documents from './pages/Documents';
 import Profile from './pages/Profile';
+import Help from './pages/Help';
+import VisitScheduler from './pages/VisitScheduler';
 
 // Import our components (we'll create these next)
 import Navbar from './components/Navbar';
@@ -101,6 +103,14 @@ function App() {
                 <Route 
                   path="/profile" 
                   element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} 
+                />
+                <Route 
+                  path="/visits" 
+                  element={isAuthenticated ? <VisitScheduler /> : <Navigate to="/login" />} 
+                />
+                <Route 
+                  path="/help" 
+                  element={<Help />} 
                 />
                 
                 {/* Default redirect */}
