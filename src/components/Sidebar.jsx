@@ -1,55 +1,98 @@
 import { NavLink } from 'react-router-dom';
-import { Offcanvas } from 'react-bootstrap';
+import { Offcanvas, Badge } from 'react-bootstrap';
 
 /**
- * Sidebar component for CareCircle
+ * Sidebar component for CareConnect SA
  * 
  * Provides the main navigation menu for the app when users are logged in.
- * Responsive design - can be toggled on mobile and is always visible on desktop.
+ * Includes South African specific features like multi-language support,
+ * community health spaces, and offline access mode.
  */
-function Sidebar({ isOpen, closeSidebar }) {
-  // Navigation links with icons and labels
-  const navItems = [
-    {
-      to: '/dashboard',
-      icon: 'bi-house-door',
-      label: 'Dashboard'
+function Sidebar({ isOpen, closeSidebar, language }) {
+  // Translations for multilingual support
+  const translations = {
+    dashboard: {
+      en: 'Dashboard',
+      af: 'Kontroleskerm',
+      zu: 'Ideshibhodi',
+      xh: 'Ideshibhodi'
     },
-    {
-      to: '/updates',
-      icon: 'bi-chat-left-text',
-      label: 'Updates'
+    updates: {
+      en: 'Updates',
+      af: 'Opdaterings',
+      zu: 'Izibuyekezo',
+      xh: 'Izihlaziyo'
     },
-    {
-      to: '/medications',
-      icon: 'bi-capsule',
-      label: 'Medications'
+    medications: {
+      en: 'Medications',
+      af: 'Medikasie',
+      zu: 'Imithi',
+      xh: 'Amayeza'
     },
-    {
-      to: '/tasks',
-      icon: 'bi-check2-square',
-      label: 'Tasks'
+    tasks: {
+      en: 'Tasks',
+      af: 'Take',
+      zu: 'Imisebenzi',
+      xh: 'Imisebenzi'
     },
-    {
-      to: '/visits',
-      icon: 'bi-calendar-event',
-      label: 'Visits'
+    visits: {
+      en: 'Visits',
+      af: 'Besoeke',
+      zu: 'Izivakashi',
+      xh: 'Iindwendwe'
     },
-    {
-      to: '/documents',
-      icon: 'bi-file-earmark-text',
-      label: 'Documents'
+    documents: {
+      en: 'Documents',
+      af: 'Dokumente',
+      zu: 'Amadokhumenti',
+      xh: 'Amaxwebhu'
     },
-    {
-      to: '/profile',
-      icon: 'bi-person',
-      label: 'Profile'
+    communityHealth: {
+      en: 'Community Health',
+      af: 'Gemeenskap Gesondheid',
+      zu: 'Impilo Yomphakathi',
+      xh: 'Impilo Yoluntu'
     },
-    {
-      to: '/help',
-      icon: 'bi-question-circle',
-      label: 'Help'
+    profile: {
+      en: 'Profile',
+      af: 'Profiel',
+      zu: 'Iphrofayela',
+      xh: 'Iphrofayile'
+    },
+    help: {
+      en: 'Help',
+      af: 'Hulp',
+      zu: 'Usizo',
+      xh: 'Uncedo'
+    },
+    version: {
+      en: 'Version',
+      af: 'Weergawe',
+      zu: 'Inguqulo',
+      xh: 'Uhlelo'
+    },
+    caringTogether: {
+      en: 'Caring together in South Africa',
+      af: 'Sorg saam in Suid-Afrika',
+      zu: 'Sinakekela ndawonye eNingizimu Afrika',
+      xh: 'Sikhathala kunye eMzantsi Afrika'
     }
+  };
+  // Get text based on current language
+  const getText = (key) => {
+    return translations[key]?.[language] || translations[key]?.['en'] || key;
+  };
+
+  const navItems = [
+    { to: '/', icon: 'bi-house-door', label: getText('dashboard') },
+    { to: '/updates', icon: 'bi-chat-left-text', label: getText('updates') },
+    { to: '/medications', icon: 'bi-capsule', label: getText('medications') },
+    { to: '/tasks', icon: 'bi-check2-square', label: getText('tasks') },
+    { to: '/visits', icon: 'bi-calendar-event', label: getText('visits') },
+    { to: '/documents', icon: 'bi-file-earmark-text', label: getText('documents') },
+    { to: '/community-health', icon: 'bi-people', label: getText('communityHealth'), isNew: true },
+    { to: '/profile', icon: 'bi-person', label: getText('profile') },
+    { to: '/help', icon: 'bi-question-circle', label: getText('help') }
   ];
 
   // Mobile sidebar uses Offcanvas component from React-Bootstrap
@@ -68,8 +111,9 @@ function Sidebar({ isOpen, closeSidebar }) {
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title className="d-flex align-items-center">
-            <span className="text-care-primary fw-bold fs-4">Care</span>
-            <span className="text-care-secondary fw-bold fs-4">Circle</span>
+            <span className="text-primary fw-bold fs-4">Care</span>
+            <span className="text-info fw-bold fs-4">Connect</span>
+            <span className="ms-1 badge bg-success align-self-start">SA</span>
           </Offcanvas.Title>
         </Offcanvas.Header>
         
@@ -88,6 +132,9 @@ function Sidebar({ isOpen, closeSidebar }) {
                   >
                     <i className={`${item.icon} me-3`}></i>
                     <span>{item.label}</span>
+                    {item.isNew && (
+                      <Badge bg="success" pill className="ms-2">New</Badge>
+                    )}
                   </NavLink>
                 </li>
               ))}
@@ -96,9 +143,13 @@ function Sidebar({ isOpen, closeSidebar }) {
           
           {/* App info */}
           <div className="mt-auto p-3 border-top border-light small text-muted">
-            <p className="mb-1">CareCircle v1.0</p>
-            <p className="mb-1">© 2025 CareCircle</p>
-            <p className="mb-0">Caring together</p>
+            <p className="mb-1">CareConnect SA v1.0</p>
+            <p className="mb-1">© 2025 CareConnect SA</p>
+            <p className="mb-0">{getText('caringTogether')}</p>
+            <div className="mt-2 d-flex gap-1">
+              <img src="https://flagcdn.com/w20/za.png" alt="South African Flag" width="20" height="14" />
+              <span className="small">Made for South Africa</span>
+            </div>
           </div>
         </Offcanvas.Body>
       </Offcanvas>
@@ -106,8 +157,9 @@ function Sidebar({ isOpen, closeSidebar }) {
       {/* Desktop sidebar - always visible on larger screens */}
       <div className="d-none d-md-block bg-white border-end" style={{ width: '280px' }}>
         <div className="d-flex justify-content-center py-4">
-          <span className="text-care-primary fw-bold fs-4">Care</span>
-          <span className="text-care-secondary fw-bold fs-4">Circle</span>
+          <span className="text-primary fw-bold fs-4">Care</span>
+          <span className="text-info fw-bold fs-4">Connect</span>
+          <span className="ms-1 badge bg-success align-self-start">SA</span>
         </div>
         
         <div className="px-3 py-2">
@@ -122,6 +174,9 @@ function Sidebar({ isOpen, closeSidebar }) {
                 >
                   <i className={`${item.icon} me-3`}></i>
                   <span>{item.label}</span>
+                  {item.isNew && (
+                    <Badge bg="success" pill className="ms-2">New</Badge>
+                  )}
                 </NavLink>
               </li>
             ))}
@@ -129,9 +184,13 @@ function Sidebar({ isOpen, closeSidebar }) {
         </div>
         
         <div className="mt-auto p-3 border-top border-light small text-muted position-fixed bottom-0" style={{ width: '280px' }}>
-          <p className="mb-1">CareCircle v1.0</p>
-          <p className="mb-1">© 2025 CareCircle</p>
-          <p className="mb-0">Caring together</p>
+          <p className="mb-1">CareConnect SA v1.0</p>
+          <p className="mb-1">© 2025 CareConnect SA</p>
+          <p className="mb-0">{getText('caringTogether')}</p>
+          <div className="mt-2 d-flex gap-1">
+            <img src="https://flagcdn.com/w20/za.png" alt="South African Flag" width="20" height="14" />
+            <span className="small">Made for South Africa</span>
+          </div>
         </div>
       </div>
     </>
