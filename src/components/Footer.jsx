@@ -10,40 +10,42 @@ function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-white border-t border-gray-200 py-6">
+    <footer className="bg-white border-top py-4 mt-auto">
       <div className="container-app">
-        <div className="flex flex-col md:flex-row md:justify-between items-center">
+        <div className="row align-items-center text-center text-md-start">
           {/* Logo and tagline */}
-          <div className="mb-4 md:mb-0">
-            <div className="flex items-center justify-center md:justify-start">
-              <span className="text-primary-600 text-xl font-bold">Care</span>
-              <span className="text-secondary-600 text-xl font-bold">Circle</span>
+          <div className="col-md-4 mb-3 mb-md-0">
+            <div className="d-flex align-items-center justify-content-center justify-content-md-start">
+              <span className="text-care-primary fw-bold fs-4">Care</span>
+              <span className="text-care-secondary fw-bold fs-4">Circle</span>
             </div>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="small text-muted mt-1 mb-0">
               Caring together, made easier
             </p>
           </div>
           
           {/* Links */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
-            <Link to="/privacy" className="text-sm text-gray-600 hover:text-primary-600">
-              Privacy Policy
-            </Link>
-            <Link to="/terms" className="text-sm text-gray-600 hover:text-primary-600">
-              Terms of Service
-            </Link>
-            <Link to="/contact" className="text-sm text-gray-600 hover:text-primary-600">
-              Contact Us
-            </Link>
-            <Link to="/help" className="text-sm text-gray-600 hover:text-primary-600">
-              Help & Support
-            </Link>
+          <div className="col-md-8">
+            <div className="d-flex flex-wrap justify-content-center justify-content-md-end gap-3 gap-md-4">
+              <Link to="/privacy" className="small text-secondary text-decoration-none">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="small text-secondary text-decoration-none">
+                Terms of Service
+              </Link>
+              <Link to="/contact" className="small text-secondary text-decoration-none">
+                Contact Us
+              </Link>
+              <Link to="/help" className="small text-secondary text-decoration-none">
+                Help & Support
+              </Link>
+            </div>
+            
+            {/* Copyright */}
+            <div className="mt-3 text-center text-md-end small text-muted">
+              <p className="mb-0">© {currentYear} CareCircle. All rights reserved.</p>
+            </div>
           </div>
-        </div>
-        
-        {/* Copyright */}
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>© {currentYear} CareCircle. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -269,6 +269,36 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Sidebar specific styling */
+.sidebar-offcanvas {
+  width: 280px !important;
+}
+
+.sidebar-offcanvas .offcanvas-header {
+  border-bottom: 1px solid var(--care-gray-200);
+}
+
+.nav-link.active {
+  background-color: var(--care-primary-light);
+  color: var(--care-primary) !important;
+}
+
+.nav-link:hover:not(.active) {
+  background-color: var(--care-gray-100);
+}
+
+/* Fix for main content area */
+main.flex-grow-1 {
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  padding-bottom: 60px; /* Space for footer */
+}
+
+/* Footer positioning */
+footer.mt-auto {
+  margin-top: auto !important;
+}
+
 /* Animation for loading states */
 .loading-pulse {
   animation: pulse 1.5s infinite;

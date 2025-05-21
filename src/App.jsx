@@ -49,14 +49,14 @@ function App() {
 
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-gray-50">
+      <div className="d-flex flex-column min-vh-100">
         {/* Navbar at the top */}
         <Navbar 
           isAuthenticated={isAuthenticated} 
           toggleSidebar={toggleSidebar} 
         />
         
-        <div className="flex flex-1 overflow-hidden">
+        <div className="d-flex flex-grow-1 overflow-hidden">
           {/* Sidebar - hidden on mobile unless toggled */}
           {isAuthenticated && (
             <Sidebar 
@@ -66,7 +66,7 @@ function App() {
           )}
           
           {/* Main content area */}
-          <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          <main className="flex-grow-1 overflow-auto p-3 p-md-4">
             <div className="container-app">
               <Routes>
                 {/* Public routes */}
